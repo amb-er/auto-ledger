@@ -1,0 +1,4 @@
+// Root build file. AGP 8.2.2 已在本地 Gradle 缓存，配合 Gradle 8.2 使用。
+plugins {
+    id 'com.android.application' version '8.2.2' apply false
+}

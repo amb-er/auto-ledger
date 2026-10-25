@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/ai_endpoint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_input"
+        android:hint="API 端点（如 https://api.deepseek.com）"
+        android:inputType="textUri"
+        android:padding="12dp"
+        android:textColor="@color/text_main"
+        android:textColorHint="@color/text_sec"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/ai_key"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_input"
+        android:hint="API Key"
+        android:inputType="textPassword"
+        android:padding="12dp"
+        android:textColor="@color/text_main"
+        android:textColorHint="@color/text_sec"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/ai_model"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_input"
+        android:hint="模型名（如 deepseek-chat）"
+        android:inputType="text"
+        android:padding="12dp"
+        android:textColor="@color/text_main"
+        android:textColorHint="@color/text_sec"
+        android:textSize="14sp" />
+</LinearLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/search_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_input"
+        android:hint="输入商户 / 分类 / 备注关键词"
+        android:inputType="text"
+        android:padding="12dp"
+        android:textColor="@color/text_main"
+        android:textColorHint="@color/text_sec"
+        android:textSize="15sp" />
+</LinearLayout>

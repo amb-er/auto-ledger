@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">记账本</string>
+    <string name="service_notification">记账本·通知监听</string>
+    <string name="service_accessibility">记账本·无障碍辅助</string>
+    <string name="empty_hint">还没有账目\n点右下角 + 记一笔吧</string>
+</resources>
