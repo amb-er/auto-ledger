@@ -49,6 +49,7 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ThemeUtil.applyTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         db = new LedgerDbHelper(this);
@@ -64,8 +65,11 @@ public class MainActivity extends Activity {
         listView.setAdapter(adapter);
 
         findViewById(R.id.fab).setOnClickListener(v -> showAddDialog());
-        findViewById(R.id.btn_permission).setOnClickListener(v -> showPermissionDialog());
+        findViewById(R.id.btn_permission).setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
         findViewById(R.id.btn_search).setOnClickListener(v -> showSearchDialog());
+        findViewById(R.id.btn_family).setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, FamilyActivity.class)));
         findViewById(R.id.stats_card).setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, StatisticsActivity.class)));
         listView.setOnItemClickListener((parent, view, position, id) -> {
@@ -151,9 +155,12 @@ public class MainActivity extends Activity {
                     t.merchant = nt.isEmpty() ? (income ? "收入" : "手动记账") : nt;
                     t.source = "manual";
                     t.note = nt;
+                    t.remark = nt;
                     t.time = System.currentTimeMillis();
+                    t.member = AppSettings.getMemberName(MainActivity.this);
                     long id = db.insert(t);
                     RoastHelper.roastAsync(MainActivity.this, db, id, t);
+                    FamilyClient.upload(MainActivity.this, t);
                     refresh();
                     Toast.makeText(this, "已记", Toast.LENGTH_SHORT).show();                })
                 .setNegativeButton("取消", null)
@@ -441,6 +448,7 @@ public class MainActivity extends Activity {
                     t.category = inc ? "收入" : categoryOf(categoryGroup.getCheckedRadioButtonId());
                     t.merchant = nt.isEmpty() ? (inc ? "收入" : "手动记账") : nt;
                     t.note = nt;
+                    t.remark = nt;
                     db.update(t);
                     refresh();
                     Toast.makeText(this, "已更新", Toast.LENGTH_SHORT).show();

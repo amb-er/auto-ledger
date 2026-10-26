@@ -52,8 +52,8 @@
         android:hint="金额"
         android:inputType="numberDecimal"
         android:padding="12dp"
-        android:textColor="@color/text_main"
-        android:textColorHint="@color/text_sec"
+        android:textColor="?attr/colorTextMain"
+        android:textColorHint="?attr/colorTextSec"
         android:textSize="16sp" />
 
     <EditText
@@ -65,8 +65,8 @@
         android:hint="备注（如：午餐、地铁）"
         android:inputType="text"
         android:padding="12dp"
-        android:textColor="@color/text_main"
-        android:textColorHint="@color/text_sec"
+        android:textColor="?attr/colorTextMain"
+        android:textColorHint="?attr/colorTextSec"
         android:textSize="16sp" />
 
     <TextView
@@ -75,7 +75,7 @@
         android:layout_marginTop="18dp"
         android:layout_marginBottom="8dp"
         android:text="分类"
-        android:textColor="@color/text_sec"
+        android:textColor="?attr/colorTextSec"
         android:textSize="13sp" />
 
     <RadioGroup

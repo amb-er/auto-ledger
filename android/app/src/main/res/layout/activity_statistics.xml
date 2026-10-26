@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg"
+    android:background="?attr/colorBg"
     android:orientation="vertical">
 
     <!-- 顶栏 -->
@@ -21,7 +21,7 @@
             android:focusable="true"
             android:padding="6dp"
             android:text="‹ 返回"
-            android:textColor="@color/text_main"
+            android:textColor="?attr/colorTextMain"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -122,12 +122,12 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="4dp"
         android:text="分类占比"
-        android:textColor="@color/text_main"
+        android:textColor="?attr/colorTextMain"
         android:textSize="16sp"
         android:textStyle="bold" />
 
     <!-- 饼图 -->
-    <PieChartView
+    <space.pengtao.ledger.PieChartView
         android:id="@+id/pie_chart"
         android:layout_width="180dp"
         android:layout_height="180dp"

@@ -15,7 +15,7 @@ import java.util.Map;
 public class LedgerDbHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "ledger.db";
-    private static final int DB_VERSION = 3;
+    private static final int DB_VERSION = 5;
     private static final String TABLE = "transactions";
 
     public LedgerDbHelper(Context ctx) {
@@ -33,6 +33,8 @@ public class LedgerDbHelper extends SQLiteOpenHelper {
                 "note TEXT," +
                 "comment TEXT," +
                 "status INTEGER NOT NULL DEFAULT 1," +
+                "member TEXT DEFAULT ''," +
+                "remark TEXT DEFAULT ''," +
                 "time INTEGER NOT NULL)");
     }
 
@@ -43,6 +45,12 @@ public class LedgerDbHelper extends SQLiteOpenHelper {
         }
         if (oldV < 3) {
             db.execSQL("ALTER TABLE " + TABLE + " ADD COLUMN status INTEGER NOT NULL DEFAULT 1");
+        }
+        if (oldV < 4) {
+            db.execSQL("ALTER TABLE " + TABLE + " ADD COLUMN member TEXT DEFAULT ''");
+        }
+        if (oldV < 5) {
+            db.execSQL("ALTER TABLE " + TABLE + " ADD COLUMN remark TEXT DEFAULT ''");
         }
     }
 
@@ -55,6 +63,8 @@ public class LedgerDbHelper extends SQLiteOpenHelper {
         v.put("note", t.note);
         v.put("comment", t.comment);
         v.put("status", t.status);
+        v.put("member", t.member);
+        v.put("remark", t.remark);
         v.put("time", t.time);
         return getWritableDatabase().insert(TABLE, null, v);
     }
@@ -75,6 +85,8 @@ public class LedgerDbHelper extends SQLiteOpenHelper {
                 v.put("note", t.note);
                 v.put("comment", t.comment);
                 v.put("status", t.status);
+                v.put("member", t.member);
+                v.put("remark", t.remark);
                 v.put("time", t.time);
                 long id = db.insert(TABLE, null, v);
                 if (id > 0) count++;
@@ -119,6 +131,11 @@ public class LedgerDbHelper extends SQLiteOpenHelper {
         getWritableDatabase().delete(TABLE, "id = ?", new String[]{String.valueOf(id)});
     }
 
+    /** 清空所有账目。 */
+    public void clearAll() {
+        getWritableDatabase().delete(TABLE, null, null);
+    }
+
     /** 按关键词模糊搜索（商户/分类/备注/辣评）。 */
     public List<Transaction> search(String keyword) {
         List<Transaction> out = new ArrayList<>();
@@ -152,6 +169,8 @@ public class LedgerDbHelper extends SQLiteOpenHelper {
         t.note = c.getString(c.getColumnIndexOrThrow("note"));
         t.comment = c.getString(c.getColumnIndexOrThrow("comment"));
         t.status = c.getInt(c.getColumnIndexOrThrow("status"));
+        t.member = c.getString(c.getColumnIndexOrThrow("member"));
+        t.remark = c.getString(c.getColumnIndexOrThrow("remark"));
         t.time = c.getLong(c.getColumnIndexOrThrow("time"));
         return t;
     }

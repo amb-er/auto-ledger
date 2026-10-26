@@ -7,5 +7,21 @@
         <item name="android:colorPrimary">@color/primary</item>
         <item name="android:colorPrimaryDark">@color/primary_dark</item>
         <item name="android:colorAccent">@color/primary</item>
+        <item name="colorBg">@color/bg</item>
+        <item name="colorCard">@color/card</item>
+        <item name="colorTextMain">@color/text_main</item>
+        <item name="colorTextSec">@color/text_sec</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="@android:style/Theme.Material.NoActionBar">
+        <item name="android:windowBackground">#121212</item>
+        <item name="android:statusBarColor">#121212</item>
+        <item name="android:colorPrimary">@color/primary</item>
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
+        <item name="android:colorAccent">@color/primary</item>
+        <item name="colorBg">#121212</item>
+        <item name="colorCard">#1E1E1E</item>
+        <item name="colorTextMain">#E6E6E6</item>
+        <item name="colorTextSec">#9A9A9A</item>
     </style>
 </resources>

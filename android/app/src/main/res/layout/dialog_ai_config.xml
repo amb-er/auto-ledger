@@ -13,8 +13,8 @@
         android:hint="API 端点（如 https://api.deepseek.com）"
         android:inputType="textUri"
         android:padding="12dp"
-        android:textColor="@color/text_main"
-        android:textColorHint="@color/text_sec"
+        android:textColor="?attr/colorTextMain"
+        android:textColorHint="?attr/colorTextSec"
         android:textSize="14sp" />
 
     <EditText
@@ -26,8 +26,8 @@
         android:hint="API Key"
         android:inputType="textPassword"
         android:padding="12dp"
-        android:textColor="@color/text_main"
-        android:textColorHint="@color/text_sec"
+        android:textColor="?attr/colorTextMain"
+        android:textColorHint="?attr/colorTextSec"
         android:textSize="14sp" />
 
     <EditText
@@ -39,7 +39,7 @@
         android:hint="模型名（如 deepseek-chat）"
         android:inputType="text"
         android:padding="12dp"
-        android:textColor="@color/text_main"
-        android:textColorHint="@color/text_sec"
+        android:textColor="?attr/colorTextMain"
+        android:textColorHint="?attr/colorTextSec"
         android:textSize="14sp" />
 </LinearLayout>

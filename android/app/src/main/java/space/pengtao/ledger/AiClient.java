@@ -25,7 +25,7 @@ public class AiClient {
                 + "要犀利、带点损、会玩梗（网络热梗/谐音梗/抽象梗都行，但别老套、别生硬堆砌），"
                 + "幽默但不冒犯，25字以内，纯中文，直接输出辣评本身，不要任何前缀和解释。\n"
                 + "消费：金额" + amount + "元，分类" + category + "，商家" + merchant;
-        return chat(ctx, prompt, 100);
+        return chat(ctx, prompt, 1000);
     }
 
     /** 生成月度毒舌消费报告；未配置或失败返回 null。 */
@@ -33,7 +33,7 @@ public class AiClient {
         String prompt = "你是毒舌又爱玩梗的记账管家。根据下面的本月消费数据，写一份月度消费报告："
                 + "要毒舌犀利、会玩梗、有幽默感，指出最败家的地方、该省的地方，"
                 + "结构清晰（可分点或加小标题），150字以内，纯中文，直接输出报告内容。\n\n" + data;
-        return chat(ctx, prompt, 500);
+        return chat(ctx, prompt, 2000);
     }
 
     private static String chat(Context ctx, String prompt, int maxTokens) {
@@ -85,8 +85,12 @@ public class AiClient {
             br.close();
 
             JSONObject resp = new JSONObject(sb.toString());
-            String content = resp.getJSONArray("choices").getJSONObject(0)
-                    .getJSONObject("message").getString("content").trim();
+            JSONObject message = resp.getJSONArray("choices").getJSONObject(0).getJSONObject("message");
+            String content = message.optString("content", "").trim();
+            if (content.isEmpty()) {
+                content = message.optString("reasoning_content", "").trim();
+            }
+            if (content.isEmpty()) return null;
             logAi(ctx, "✅ AI 返回：" + content);
             return content;
         } catch (Exception e) {

@@ -7,6 +7,6 @@
     android:paddingTop="14dp"
     android:paddingBottom="6dp"
     android:text="今天"
-    android:textColor="@color/text_sec"
+    android:textColor="?attr/colorTextSec"
     android:textSize="13sp"
     android:textStyle="bold" />

@@ -37,6 +37,7 @@ public class LedgerAccessibilityService extends AccessibilityService {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
+        if (!AppSettings.isAutoEnabled(this)) return;
         String pkg = event.getPackageName() == null ? "" : event.getPackageName().toString();
         if (!WECHAT.equals(pkg)) return;
 
@@ -107,8 +108,10 @@ public class LedgerAccessibilityService extends AccessibilityService {
             t.note = all;
             t.status = isDetail ? 1 : 0; // 详情页直接确认，聊天界面待确认
             t.time = now;
+            t.member = AppSettings.getMemberName(this);
             long id = db.insert(t);
             RoastHelper.roastAsync(this, db, id, t);
+            FamilyClient.upload(this, t);
             NotifyHelper.notifyTransaction(this, id,
                     "记账本识别到一笔" + (isIncome ? "收款" : "支出"),
                     (isIncome ? "+" : "-") + "¥" + money
@@ -122,7 +125,9 @@ public class LedgerAccessibilityService extends AccessibilityService {
             rt.category = guessCategory(all);
             rt.merchant = guessMerchant(texts);
             rt.source = "wechat";
+            rt.member = AppSettings.getMemberName(this);
             RoastHelper.roastAsync(this, db, pendingId, rt);
+            FamilyClient.upload(this, rt);
             NotifyHelper.notifyTransaction(this, pendingId,
                     "记账本补全了微信金额",
                     (isIncome ? "+" : "-") + "¥" + money);

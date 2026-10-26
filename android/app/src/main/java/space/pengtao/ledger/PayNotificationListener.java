@@ -36,6 +36,7 @@ public class PayNotificationListener extends NotificationListenerService {
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
+        if (!AppSettings.isAutoEnabled(this)) return;
         String pkg = sbn.getPackageName();
         if (!ALIPAY.equals(pkg) && !WECHAT.equals(pkg)) return;
 
@@ -109,8 +110,10 @@ public class PayNotificationListener extends NotificationListenerService {
         tx.time = System.currentTimeMillis();
 
         LedgerDbHelper db = new LedgerDbHelper(this);
+        tx.member = AppSettings.getMemberName(this);
         long id = db.insert(tx);
         RoastHelper.roastAsync(this, db, id, tx);
+        FamilyClient.upload(this, tx);
         if (signed != 0) {
             NotifyHelper.notifyTransaction(this, id,
                     "记账本识别到一笔" + (isIncome ? "收款" : "支出"),

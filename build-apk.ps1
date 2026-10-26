@@ -1,4 +1,4 @@
-# 构建「记账本」安卓 App。
+# 构建 AutoLedger 安卓 App。
 # 环境（本机已具备，2026-10 打包留下）：
 #   C:\Users\DNY\dev\jdk\jdk-17.0.2
 #   C:\Users\DNY\dev\gradle\gradle-8.2
@@ -25,7 +25,7 @@ Write-Output '== 构建 release APK =='
 $built = Join-Path $android 'app\build\outputs\apk\release\app-release.apk'
 if (-not (Test-Path $built)) { throw "构建产物不存在: $built" }
 
-$dest = Join-Path $dir '记账本.apk'
+$dest = Join-Path $dir 'AutoLedger.apk'
 Copy-Item $built $dest -Force
 Write-Output ''
 Write-Output ('产物: ' + $dest + '  (' + [math]::Round((Get-Item $dest).Length / 1MB, 2) + ' MB)')

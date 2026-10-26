@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="colorBg" format="color" />
+    <attr name="colorCard" format="color" />
+    <attr name="colorTextMain" format="color" />
+    <attr name="colorTextSec" format="color" />
+</resources>

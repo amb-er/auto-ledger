@@ -10,6 +10,8 @@ public class Transaction {
     public String note;
     public String comment; // AI 毒舌辣评
     public int status = 1; // 0=待确认，1=已确认（默认已确认，自动记账会显式改为待确认）
+    public String member = ""; // 家庭成员昵称（家庭版）
+    public String remark = ""; // 手动备注（说明是什么东西，全家可见）
     public long time;     // 毫秒时间戳
 
     public Transaction() {}

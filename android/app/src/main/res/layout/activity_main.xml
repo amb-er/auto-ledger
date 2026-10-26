@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg">
+    android:background="?attr/colorBg">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,6 +41,22 @@
                     android:layout_weight="1" />
 
                 <TextView
+                    android:id="@+id/btn_family"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_permission_chip"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="🏠"
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
+
+                <TextView
                     android:id="@+id/btn_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -67,7 +83,7 @@
                     android:paddingEnd="10dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:text="⚙ 自动记账"
+                    android:text="⚙ 设置"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -125,7 +141,7 @@
                 android:id="@+id/list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/bg"
+                android:background="?attr/colorBg"
                 android:clipToPadding="false"
                 android:divider="@null"
                 android:dividerHeight="0dp"
@@ -138,11 +154,11 @@
                 android:id="@+id/empty_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/bg"
+                android:background="?attr/colorBg"
                 android:gravity="center"
                 android:lineSpacingExtra="4dp"
                 android:text="@string/empty_hint"
-                android:textColor="@color/text_sec"
+                android:textColor="?attr/colorTextSec"
                 android:textSize="15sp"
                 android:visibility="gone" />
         </FrameLayout>
