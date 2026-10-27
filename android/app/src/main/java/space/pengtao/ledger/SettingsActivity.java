@@ -90,7 +90,8 @@ public class SettingsActivity extends Activity {
         addRow("清空日志", "通知 / 无障碍 / AI", v -> clearLogs());
 
         addHeader("关于");
-        addRow("版本", "2.2.0", v -> showAbout());
+        addRow("检查更新", "检测新版本", v -> UpdateChecker.check(this, false));
+        addRow("版本", "2.4.0", v -> showAbout());
     }
 
     // ---------- 家庭设置 ----------
@@ -483,7 +484,7 @@ public class SettingsActivity extends Activity {
     private void showAbout() {
         new AlertDialog.Builder(this)
                 .setTitle("记账本")
-                .setMessage("版本 2.2.0\n\n安卓自动记账 App\n支付宝/微信自动记账 + AI 毒舌辣评\n\n开源：github.com/amb-er/auto-ledger")
+                .setMessage("版本 2.4.0\n\n安卓自动记账 App\n支付宝/微信自动记账 + AI 毒舌辣评 + 家庭共享账单\n\n开源：github.com/amb-er/auto-ledger")
                 .setPositiveButton("关闭", null)
                 .show();
     }

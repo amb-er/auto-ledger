@@ -25,6 +25,10 @@ public class LedgerAccessibilityService extends AccessibilityService {
     private static final Pattern AMOUNT = Pattern.compile(
             "[¥￥]\\s*([0-9]+(?:\\.[0-9]{1,2})?)|([0-9]+(?:\\.[0-9]{1,2})?)\\s*元");
 
+    // 微信付款码支付：服务号消息「已支付¥xx」
+    private static final Pattern PAID = Pattern.compile(
+            "已支付\\s*[¥￥]\\s*([0-9]+(?:\\.[0-9]{1,2})?)");
+
     private static String lastFingerprint = "";
     private static long lastProcessTime = 0;
     private static long lastLogTime = 0;
@@ -69,11 +73,12 @@ public class LedgerAccessibilityService extends AccessibilityService {
                 || all.contains("收款详情") || all.contains("交易详情")
                 || all.contains("红包详情");
 
+        boolean isWechatPaid = PAID.matcher(all).find(); // 微信付款码支付（服务号"已支付¥xx"）
         boolean hasTransfer;
         if (isDetail) {
             hasTransfer = true; // 详情页直接处理
         } else {
-            hasTransfer = all.contains("转账") || all.contains("收款") || all.contains("红包");
+            hasTransfer = all.contains("转账") || all.contains("收款") || all.contains("红包") || isWechatPaid;
         }
         if (!hasTransfer) return;
 
@@ -84,13 +89,13 @@ public class LedgerAccessibilityService extends AccessibilityService {
         lastFingerprint = fp;
         lastProcessTime = now;
 
-        double amount = extractAmount(all);
+        double amount = isWechatPaid ? extractPaidAmount(all) : extractAmount(all);
         if (amount <= 0) {
             logAccess("[无障碍] 有转账/详情但没提取到金额");
             return;
         }
 
-        boolean isOut = contains(all, "发起", "转出", "付款", "支付", "消费", "扣款");
+        boolean isOut = isWechatPaid || contains(all, "发起", "转出", "付款", "支付", "消费", "扣款");
         boolean isIn = contains(all, "收款", "收到", "到账", "退款", "入账", "转入");
         boolean isIncome = isIn && !isOut;
 
@@ -103,7 +108,7 @@ public class LedgerAccessibilityService extends AccessibilityService {
             Transaction t = new Transaction();
             t.amount = signed;
             t.category = guessCategory(all);
-            t.merchant = guessMerchant(texts);
+            t.merchant = isWechatPaid ? "微信付款" : guessMerchant(texts);
             t.source = "wechat";
             t.note = all;
             t.status = isDetail ? 1 : 0; // 详情页直接确认，聊天界面待确认
@@ -123,7 +128,7 @@ public class LedgerAccessibilityService extends AccessibilityService {
             Transaction rt = new Transaction();
             rt.amount = signed;
             rt.category = guessCategory(all);
-            rt.merchant = guessMerchant(texts);
+            rt.merchant = isWechatPaid ? "微信付款" : guessMerchant(texts);
             rt.source = "wechat";
             rt.member = AppSettings.getMemberName(this);
             RoastHelper.roastAsync(this, db, pendingId, rt);
@@ -183,6 +188,15 @@ public class LedgerAccessibilityService extends AccessibilityService {
             } catch (Exception ignored) {}
         }
         return best;
+    }
+
+    /** 提取「已支付¥xx」里的金额（微信付款码支付专用，精确不误取列表里其他金额）。 */
+    private double extractPaidAmount(String all) {
+        Matcher m = PAID.matcher(all);
+        if (m.find()) {
+            try { return Double.parseDouble(m.group(1)); } catch (Exception ignored) {}
+        }
+        return 0;
     }
 
     private void logAccess(String entry) {

@@ -88,6 +88,8 @@ public class MainActivity extends Activity {
             if (row instanceof Transaction) showItemMenu((Transaction) row);
             return true;
         });
+
+        UpdateChecker.check(this, true); // 启动时静默检查更新
     }
 
     @Override

@@ -3,6 +3,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
         android:allowBackup="true"
@@ -41,6 +42,13 @@
         <receiver
             android:name=".ConfirmReceiver"
             android:exported="false" />
+
+        <!-- 安装 APK 用 FileProvider（自实现，无 AndroidX） -->
+        <provider
+            android:name=".ApkFileProvider"
+            android:authorities="${applicationId}.apkfile"
+            android:exported="false"
+            android:grantUriPermissions="true" />
 
         <!-- 支付通知监听：自动记账核心 -->
         <service
