@@ -96,6 +96,32 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         refresh();
+        guidePermissionsIfNeeded();
+    }
+
+    private void guidePermissionsIfNeeded() {
+        SharedPreferences sp = getSharedPreferences("app_settings", MODE_PRIVATE);
+        if (sp.getBoolean("guide_skipped", false)) return;
+        if (!PermissionUtil.isNotificationEnabled(this)) {
+            showPermissionGuide("开启「通知使用权」",
+                    "自动识别支付宝/微信支付通知，实现自动记账。",
+                    Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS);
+        } else if (!PermissionUtil.isAccessibilityEnabled(this)) {
+            showPermissionGuide("开启「无障碍」",
+                    "微信转账通知不含金额，需靠它读取金额补全。",
+                    Settings.ACTION_ACCESSIBILITY_SETTINGS);
+        }
+    }
+
+    private void showPermissionGuide(String title, String msg, String action) {
+        new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(msg)
+                .setPositiveButton("去开启", (d, w) -> startActivity(new Intent(action)))
+                .setNegativeButton("跳过", (d, w) ->
+                        getSharedPreferences("app_settings", MODE_PRIVATE).edit()
+                                .putBoolean("guide_skipped", true).apply())
+                .show();
     }
 
     private void refresh() {
